@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "30under30",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/clearythomas/Library/Mobile Documents/com~apple~CloudDocs/30Under30/.claude/serve.py"],
+      "port": 8420
+    }
+  ]
+}

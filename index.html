@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wines Under $30 AUD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #f4f4f2;
+    --card-dark: #e9e9e6;
+    --border: #e6e6e3;
+    --ink: #16161a;
+    --muted: #6b6b6b;
+    --muted-2: #8a8a8a;
+    --accent: #0057ff;
+    --red: #b3261e;
+    --yellow: #e8b923;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 16px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'ss01' 1, 'cv05' 1;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 1.1rem 0;
+  }
+  .header-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.5rem;
+  }
+  .brand strong {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .brand strong .accent {
+    color: var(--accent);
+  }
+  .brand .sep { color: var(--border); }
+  .brand .sub { color: var(--muted); font-weight: 500; }
+
+  .primary-nav {
+    display: flex;
+    gap: 1.6rem;
+  }
+  .primary-nav a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .primary-nav a:hover { color: var(--ink); }
+  .primary-nav a.active { color: var(--ink); font-weight: 600; }
+
+  main {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin: 0 0 0.9rem;
+  }
+  h1 .accent {
+    color: var(--accent);
+  }
+  .lede {
+    color: #5a5a5a;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 0 3rem;
+  }
+  h2.section {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.1rem;
+  }
+  h2.section:not(:first-of-type) { margin-top: 3rem; }
+
+  /* Featured split card */
+  .featured {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .featured .left {
+    background: var(--card);
+    padding: 1.6rem 1.7rem;
+  }
+  .featured .left .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(0,87,255,0.1);
+    border-radius: 999px;
+    padding: 0.18rem 0.6rem;
+    margin-bottom: 0.7rem;
+  }
+  .featured .left h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .featured .left .producer {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 0.35rem;
+  }
+  .featured .left .variety {
+    color: var(--muted-2);
+    font-size: 0.82rem;
+    font-style: italic;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+  }
+  .featured .left p.desc {
+    color: #5a5a5a;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .featured .right {
+    background: var(--card-dark);
+    padding: 1.6rem 1.7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+  .stat-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .stat-line .label { color: var(--muted); font-size: 0.78rem; }
+  .stat-line .value { font-size: 1rem; }
+  .stat-line .value.big { font-size: 1.5rem; font-weight: 600; }
+  .stat-line .value.accent { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
+    .featured .left,
+    .featured .right {
+      padding: 1.3rem 1.4rem;
+    }
+  }
+
+  /* Signup */
+  .signup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.6rem;
+    margin-bottom: 3rem;
+  }
+  .signup-text h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .signup-text p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .signup-fields {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+  .signup-fields input {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    width: 220px;
+  }
+  .signup-fields input:focus { outline: 1.5px solid var(--ink); }
+  .signup-fields button {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .signup-fields button:hover { opacity: 0.9; }
+  .signup.subscribed .signup-text p { color: var(--accent); font-weight: 500; }
+
+  @media (max-width: 640px) {
+    .signup {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .signup-fields input {
+      width: auto;
+      flex: 1;
+    }
+  }
+
+  /* Controls */
+  .controls-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "type sort" "region region";
+    align-items: center;
+    gap: 0.6rem 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .controls-wrap .area-type { grid-area: type; }
+  .controls-wrap .area-sort { grid-area: sort; }
+  .controls-wrap .area-region { grid-area: region; margin-bottom: 0; }
+
+  @media (max-width: 640px) {
+    .controls-wrap {
+      grid-template-columns: 1fr;
+      grid-template-areas: "type" "region" "sort";
+    }
+    .controls-wrap .area-sort {
+      width: 100%;
+    }
+  }
+
+  .controls-wrap select {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .controls-wrap select:focus { outline: 1.5px solid var(--ink); }
+
+  .filters {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .filters.region-filters {
+    margin-bottom: 1.2rem;
+  }
+  .filter-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .filter-btn:hover { border-color: #c9c9c5; color: var(--ink); }
+  .filter-btn.active {
+    background: rgba(0,87,255,0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Grid cards */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    position: relative;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 0.15s ease;
+  }
+  .card:hover { border-color: #c9c9c5; }
+  .type-dot {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .type-dot.red { background: var(--red); }
+  .type-dot.white { background: var(--yellow); }
+  .card h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .card .producer {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .card .region {
+    color: var(--muted-2);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .card .variety {
+    color: var(--muted-2);
+    font-size: 0.76rem;
+    font-style: italic;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .card .stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--border);
+  }
+  .card .stats .value.big { font-size: 1.15rem; }
+  .card.no-score .stats .value.no-score-value { color: var(--muted-2); font-style: italic; }
+  .card .notes {
+    font-size: 0.8rem;
+    color: var(--muted-2);
+    line-height: 1.6;
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 3rem 1rem;
+    font-size: 0.9rem;
+  }
+
+
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted-2);
+    font-size: 0.78rem;
+    padding: 1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <strong>30Under30</strong>
+    </div>
+    <nav class="primary-nav">
+      <a href="#" class="active" data-view="wines">Wines</a>
+      <a href="#" data-view="events">Events</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div id="wines-view">
+  <h1>Great drops <span class="accent">don't cost a lot</span></h1>
+  <p class="lede">A selection of 30 wines under $30 AUD, found at your local, that punch above their price tag — ranked by Pour Score, a non-linear index that normalises Vivino ratings against price.</p>
+
+  <h2 class="section">Best value</h2>
+  <div id="featured" class="featured"></div>
+
+  <h2 class="section">All wines</h2>
+  <div class="controls-wrap">
+    <div id="type-filters" class="filters area-type">
+      <button class="filter-btn active" data-value="all">All</button>
+      <button class="filter-btn" data-value="Red">Red</button>
+      <button class="filter-btn" data-value="White">White</button>
+    </div>
+    <select id="sort" class="area-sort">
+      <option value="edge">Sort: Pour Score</option>
+      <option value="price-asc">Sort: Price (low → high)</option>
+      <option value="price-desc">Sort: Price (high → low)</option>
+      <option value="score">Sort: Vivino Rating</option>
+    </select>
+    <div id="region-filters" class="filters region-filters area-region">
+      <button class="filter-btn active" data-value="all">All regions</button>
+      <button class="filter-btn" data-value="Adelaide Hills">Adelaide Hills</button>
+      <button class="filter-btn" data-value="Eden Valley">Eden Valley</button>
+      <button class="filter-btn" data-value="Central Victoria">Central Victoria</button>
+      <button class="filter-btn" data-value="Alentejo">Alentejo</button>
+      <button class="filter-btn" data-value="Barossa Valley">Barossa Valley</button>
+      <button class="filter-btn" data-value="McLaren Vale">McLaren Vale</button>
+      <button class="filter-btn" data-value="Padthaway">Padthaway</button>
+    </div>
+  </div>
+  <div id="grid" class="grid"></div>
+  <div id="empty" class="empty" style="display:none;">No wines match this filter.</div>
+</div>
+
+<div id="events-view" style="display:none;">
+  <h1>Events</h1>
+  <p class="lede">Stay tuned.</p>
+
+  <form id="signup" class="signup">
+    <div class="signup-text">
+      <h3>Get new drops in your inbox</h3>
+      <p>One email when a new wine cracks the list. No spam.</p>
+    </div>
+    <div class="signup-fields">
+      <input type="email" id="signup-email" placeholder="you@email.com" required>
+      <button type="submit">Subscribe</button>
+    </div>
+  </form>
+</div>
+</main>
+
+<footer>30Under30 &copy; 2026</footer>
+
+<script>
+const wines = [
+  {
+    wine: "Vinha da Coutada Velha",
+    producer: "Monte da Ravasqueira",
+    region: "Alentejo, Portugal",
+    regionGroup: "Alentejo",
+    variety: "Aragonez / Trincadeira / Syrah / Cabernet Sauvignon",
+    type: "Red",
+    price: 18.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Dark berry fruit, soft tannins and a warm, spiced finish."
+  },
+  {
+    wine: "Mike Press Shiraz",
+    producer: "Mike Press Wines",
+    region: "Adelaide Hills, SA",
+    regionGroup: "Adelaide Hills",
+    variety: "Shiraz",
+    type: "Red",
+    price: 15,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "Ripe plum and blackberry with a peppery, medium-bodied finish."
+  },
+  {
+    wine: "Pewsey Vale Eden Valley Riesling",
+    producer: "Pewsey Vale",
+    region: "Eden Valley, SA",
+    regionGroup: "Eden Valley",
+    variety: "Riesling",
+    type: "White",
+    price: 22.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "Crisp and dry, with lime zest and a mineral edge."
+  },
+  {
+    wine: "Tar & Roses Pinot Grigio",
+    producer: "Tar & Roses",
+    region: "Central Victoria, VIC",
+    regionGroup: "Central Victoria",
+    variety: "Pinot Grigio",
+    type: "White",
+    price: 21,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "Light and zesty, with pear and citrus notes."
+  },
+  {
+    wine: "Woodcutter's Shiraz",
+    producer: "Torbreck",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Shiraz",
+    type: "Red",
+    price: 29,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Rich and generous, with dark plum, licorice and a touch of spice."
+  },
+  {
+    wine: "The Footbolt Shiraz",
+    producer: "d'Arenberg",
+    region: "McLaren Vale, SA",
+    regionGroup: "McLaren Vale",
+    variety: "Shiraz",
+    type: "Red",
+    price: 22,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Earthy and chocolatey, with brooding dark fruit and soft tannins."
+  },
+  {
+    wine: "Dead Letter Office Shiraz",
+    producer: "Farmer's Leap",
+    region: "Padthaway, SA",
+    regionGroup: "Padthaway",
+    variety: "Shiraz",
+    type: "Red",
+    price: 26,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "Full-bodied and peppery, with dark fruit and 15 months in French oak."
+  }
+];
+
+// Vivino ratings cluster tightly (most sub-$30 wines sit around 3.6-3.9), so each
+// extra tenth of a star gets disproportionately harder to earn. Stage the score
+// before dividing by price so a rare high rating isn't washed out by a small price gap.
+// Uses only the star rating and price shown on each card, so the number on screen
+// can be reproduced by hand: score x multiplier / price.
+function scoreDifficultyMultiplier(score) {
+  if (score == null) return null;
+  if (score >= 4.2) return 1.40;
+  if (score >= 4.0) return 1.25;
+  if (score >= 3.8) return 1.10;
+  if (score >= 3.6) return 1.00;
+  return 0.92;
+}
+
+for (const w of wines) {
+  const multiplier = scoreDifficultyMultiplier(w.score);
+  w.pourScore = (multiplier != null) ? (w.score * multiplier) / w.price : null;
+}
+
+// Index against a fixed benchmark — a hypothetical perfect 5.0-star wine at $20 —
+// rather than the best bottle in this list, so 100 means something absolute
+// and isn't just whichever wine happens to top the current set.
+const idealPourScore = (5.0 * 1.40) / 20;
+for (const w of wines) {
+  if (w.pourScore != null) w.pourScore = (w.pourScore / idealPourScore) * 100;
+}
+
+function starString(score) {
+  if (score == null) return "No score";
+  const full = Math.round(score);
+  return "★".repeat(full) + "☆".repeat(5 - full) + ` ${score.toFixed(1)}`;
+}
+
+function renderFeatured() {
+  const best = wines.filter(w => w.pourScore != null).sort((a, b) => b.pourScore - a.pourScore)[0];
+  document.getElementById('featured').innerHTML = `
+    <span class="type-dot ${best.type.toLowerCase()}"></span>
+    <div class="left">
+      <span class="tag">Top Pour Score</span>
+      <h3>${best.wine}</h3>
+      <p class="producer">${best.producer} · ${best.region}</p>
+      <p class="variety">${best.variety}</p>
+      <p class="desc">${best.notes}</p>
+    </div>
+    <div class="right">
+      <div class="stat-line"><span class="label">Price</span><span class="value big">$${best.price.toFixed(2)}</span></div>
+      <div class="stat-line"><span class="label">Vivino Rating</span><span class="value">${starString(best.score)}</span></div>
+      <div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(best.pourScore)} / 100</span></div>
+    </div>
+  `;
+}
+
+let activeType = 'all';
+let activeRegion = 'all';
+
+function render() {
+  const sortBy = document.getElementById('sort').value;
+
+  let list = wines.filter(w =>
+    (activeType === 'all' || w.type === activeType) &&
+    (activeRegion === 'all' || w.regionGroup === activeRegion)
+  );
+
+  list = list.slice().sort((a, b) => {
+    if (sortBy === 'price-asc') return a.price - b.price;
+    if (sortBy === 'price-desc') return b.price - a.price;
+    if (sortBy === 'score') return (b.score ?? -1) - (a.score ?? -1);
+    return (b.pourScore ?? -1) - (a.pourScore ?? -1);
+  });
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  grid.innerHTML = '';
+
+  if (list.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  for (const w of list) {
+    const card = document.createElement('div');
+    card.className = 'card' + (w.score == null ? ' no-score' : '');
+    card.innerHTML = `
+      <span class="type-dot ${w.type.toLowerCase()}"></span>
+      <h3>${w.wine}</h3>
+      <p class="producer">${w.producer} · ${w.region}</p>
+      <p class="variety">${w.variety}</p>
+      <div class="stats">
+        <div class="stat-line"><span class="label">Price</span><span class="value big">$${w.price.toFixed(2)}</span></div>
+        <div class="stat-line"><span class="label">Vivino Rating</span><span class="value${w.score == null ? ' no-score-value' : ''}">${starString(w.score)}</span></div>
+        ${w.pourScore != null ? `<div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(w.pourScore)} / 100</span></div>` : ''}
+      </div>
+      <p class="notes">${w.notes}</p>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+function setupFilterGroup(containerId, onChange) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelector('.filter-btn.active').classList.remove('active');
+      btn.classList.add('active');
+      onChange(btn.dataset.value);
+      render();
+    });
+  });
+}
+
+setupFilterGroup('type-filters', v => { activeType = v; });
+setupFilterGroup('region-filters', v => { activeRegion = v; });
+document.getElementById('sort').addEventListener('change', render);
+renderFeatured();
+render();
+
+document.getElementById('signup').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  form.classList.add('subscribed');
+  form.querySelector('.signup-text h3').textContent = "You're on the list";
+  form.querySelector('.signup-text p').textContent = "Thanks — we'll email you when a new wine cracks the list.";
+  form.querySelector('.signup-fields').style.display = 'none';
+});
+
+document.querySelectorAll('.primary-nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('.primary-nav a.active').classList.remove('active');
+    link.classList.add('active');
+    const view = link.dataset.view;
+    document.getElementById('wines-view').style.display = view === 'wines' ? '' : 'none';
+    document.getElementById('events-view').style.display = view === 'events' ? '' : 'none';
+  });
+});
+</script>
+
+</body>
+</html>
