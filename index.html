@@ -19,6 +19,9 @@
     --accent: #0057ff;
     --red: #b3261e;
     --yellow: #e8b923;
+    --rose: #c2607e;
+    --sparkling: #2f8f9d;
+    --fortified: #8a5a2b;
     --radius: 10px;
   }
   * { box-sizing: border-box; }
@@ -339,6 +342,9 @@
   }
   .type-dot.red { background: var(--red); }
   .type-dot.white { background: var(--yellow); }
+  .type-dot.rose { background: var(--rose); }
+  .type-dot.sparkling { background: var(--sparkling); }
+  .type-dot.fortified { background: var(--fortified); }
   .card h3 {
     margin: 0;
     font-size: 1.05rem;
@@ -414,7 +420,7 @@
 <main>
 <div id="wines-view">
   <h1>Great drops <span class="accent">don't need to cost a lot</span></h1>
-  <p class="lede">A selection of 30 wines under $30 AUD, found at your local, that punch above their price tag — ranked by Pour Score, a non-linear index that normalises Vivino ratings against price.</p>
+  <p class="lede">A selection of wines under $30 AUD, found at your local, that punch above their price tag — ranked by Pour Score, a non-linear index that normalises Vivino ratings against price.</p>
 
   <h2 class="section">Best value</h2>
   <div id="featured" class="featured"></div>
@@ -425,6 +431,9 @@
       <button class="filter-btn active" data-value="all">All</button>
       <button class="filter-btn" data-value="Red">Red</button>
       <button class="filter-btn" data-value="White">White</button>
+      <button class="filter-btn" data-value="Rose">Rosé</button>
+      <button class="filter-btn" data-value="Sparkling">Sparkling</button>
+      <button class="filter-btn" data-value="Fortified">Fortified</button>
     </div>
     <select id="sort" class="area-sort">
       <option value="edge">Sort: Pour Score</option>
@@ -442,6 +451,13 @@
       <button class="filter-btn" data-value="Barossa Valley">Barossa Valley</button>
       <button class="filter-btn" data-value="McLaren Vale">McLaren Vale</button>
       <button class="filter-btn" data-value="Padthaway">Padthaway</button>
+      <button class="filter-btn" data-value="Wrattonbully">Wrattonbully</button>
+      <button class="filter-btn" data-value="King Valley">King Valley</button>
+      <button class="filter-btn" data-value="Macedon Ranges">Macedon Ranges</button>
+      <button class="filter-btn" data-value="South Australia">South Australia</button>
+      <button class="filter-btn" data-value="Murray Darling">Murray Darling</button>
+      <button class="filter-btn" data-value="Henty">Henty</button>
+      <button class="filter-btn" data-value="Southern New South Wales">Southern NSW</button>
     </div>
   </div>
   <div id="grid" class="grid"></div>
@@ -536,7 +552,7 @@ const wines = [
     regionGroup: "Barossa Valley",
     variety: "Shiraz",
     type: "Red",
-    price: 29,
+    price: 24.90,
     score: 4.1,
     scoreSource: "Vivino",
     notes: "Rich and generous, with dark plum, licorice and a touch of spice."
@@ -564,6 +580,282 @@ const wines = [
     score: 4.0,
     scoreSource: "Vivino",
     notes: "Full-bodied and peppery, with dark fruit and 15 months in French oak."
+  },
+  {
+    wine: "Sparkling Shiraz",
+    producer: "Eight at the Gate",
+    region: "Wrattonbully, SA",
+    regionGroup: "Wrattonbully",
+    variety: "Shiraz",
+    type: "Sparkling",
+    price: 24.97,
+    score: 4.3,
+    scoreSource: "Vivino",
+    notes: "Deep-coloured sparkling red with dark berry fruit, a savoury edge and a fine, persistent mousse."
+  },
+  {
+    wine: "Fierce III Pinot Grigio",
+    producer: "Lou Miranda",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Pinot Grigio",
+    type: "White",
+    price: 29.90,
+    score: 4.3,
+    scoreSource: "Vivino",
+    notes: "Crisp and light, with pear, citrus zest and a clean, dry finish."
+  },
+  {
+    wine: "Marananga Shiraz",
+    producer: "Paulmara Estates",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Shiraz",
+    type: "Red",
+    price: 30,
+    score: 4.3,
+    scoreSource: "Vivino",
+    notes: "Concentrated dark fruit and chocolate, full-bodied with firm, ripe tannins."
+  },
+  {
+    wine: "Fierce III Prosecco",
+    producer: "Lou Miranda",
+    region: "King Valley, VIC",
+    regionGroup: "King Valley",
+    variety: "Glera",
+    type: "Sparkling",
+    price: 29.90,
+    score: 4.3,
+    scoreSource: "Vivino",
+    notes: "Light and fruity with fine bubbles, green apple and citrus notes."
+  },
+  {
+    wine: "Richard Lander Single Vineyard Shiraz",
+    producer: "The Colonial Estate",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Shiraz",
+    type: "Red",
+    price: 29.99,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Bold and structured, with blackberry, liquorice and well-integrated oak."
+  },
+  {
+    wine: "Sparkling Blanc",
+    producer: "Eight at the Gate",
+    region: "Wrattonbully, SA",
+    regionGroup: "Wrattonbully",
+    variety: "Sparkling Blend",
+    type: "Sparkling",
+    price: 22.99,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Fine, persistent bubbles with citrus and green apple over a clean, dry finish."
+  },
+  {
+    wine: "The Melée",
+    producer: "Paulmara Estates",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Red Blend",
+    type: "Red",
+    price: 25,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "A generous, approachable Barossa red blend with dark fruit and soft tannins."
+  },
+  {
+    wine: "Pinot Gris",
+    producer: "Emmalene",
+    region: "Adelaide Hills, SA",
+    regionGroup: "Adelaide Hills",
+    variety: "Pinot Gris",
+    type: "White",
+    price: 30,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Cool-climate Pinot Gris with pear, white peach and a crisp, dry palate."
+  },
+  {
+    wine: "Single Vineyard Pinot Gris",
+    producer: "Eight at the Gate",
+    region: "Wrattonbully, SA",
+    regionGroup: "Wrattonbully",
+    variety: "Pinot Gris",
+    type: "White",
+    price: 19.99,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Light and zesty, with pear and citrus over a soft, dry finish."
+  },
+  {
+    wine: "Single Vineyard Rosé",
+    producer: "Eight at the Gate",
+    region: "Wrattonbully, SA",
+    regionGroup: "Wrattonbully",
+    variety: "Rosé Blend",
+    type: "Rose",
+    price: 19.99,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Pale and dry, with red berry fruit and a crisp, refreshing finish."
+  },
+  {
+    wine: "Barossa Ink Shiraz Bubbles",
+    producer: "Grant Burge Wines",
+    region: "Barossa, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Shiraz",
+    type: "Sparkling",
+    price: 16.99,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Sparkling Shiraz with dark berry fruit, a touch of spice and a fine mousse."
+  },
+  {
+    wine: "Dhillon Glenhope Vineyard Accidental Red",
+    producer: "Bindi",
+    region: "Macedon Ranges, VIC",
+    regionGroup: "Macedon Ranges",
+    variety: "Red Blend",
+    type: "Red",
+    price: 28.80,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "A cool-climate Macedon Ranges red with bright red fruit and fine, savoury tannins."
+  },
+  {
+    wine: "Moppa Shiraz",
+    producer: "Kalleske",
+    region: "South Australia",
+    regionGroup: "South Australia",
+    variety: "Shiraz",
+    type: "Red",
+    price: 30,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Ripe, generous Barossa-style Shiraz with dark plum and a warm, spiced finish."
+  },
+  {
+    wine: "Moscato",
+    producer: "Pete's Pure",
+    region: "Murray Darling",
+    regionGroup: "Murray Darling",
+    variety: "Muscat",
+    type: "White",
+    price: 15,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Sweet and lightly sparkling, with grapey, floral aromatics and a low-alcohol finish."
+  },
+  {
+    wine: "Drumborg Vineyard Riesling",
+    producer: "Seppelt",
+    region: "Henty, VIC",
+    regionGroup: "Henty",
+    variety: "Riesling",
+    type: "White",
+    price: 29.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Cool-climate Riesling with taut lime and green apple over a fine mineral thread."
+  },
+  {
+    wine: "Buckboard Durif",
+    producer: "Kalleske",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Durif",
+    type: "Red",
+    price: 30,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Deeply coloured and full-bodied, with dark berry fruit and firm, chewy tannins."
+  },
+  {
+    wine: "Antique Muscat",
+    producer: "Yalumba",
+    region: "South Australia",
+    regionGroup: "South Australia",
+    variety: "Muscat",
+    type: "Fortified",
+    price: 23.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "A fortified dessert Muscat with raisin, toffee and dried-fruit richness."
+  },
+  {
+    wine: "10 Year Old Tawny",
+    producer: "Grant Burge Wines",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Fortified Blend",
+    type: "Fortified",
+    price: 27.75,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Aged tawny with nutty, caramel complexity and a smooth, warming finish."
+  },
+  {
+    wine: "The Steading",
+    producer: "Torbreck",
+    region: "Barossa Valley, SA",
+    regionGroup: "Barossa Valley",
+    variety: "Grenache / Shiraz / Mataro",
+    type: "Red",
+    price: 30,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "A generous Barossa GSM blend with ripe red fruit, spice and soft tannins."
+  },
+  {
+    wine: "Single Vineyard Cabernet - Shiraz",
+    producer: "Eight at the Gate",
+    region: "Wrattonbully, SA",
+    regionGroup: "Wrattonbully",
+    variety: "Cabernet Sauvignon / Shiraz",
+    type: "Red",
+    price: 19.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "A structured Cabernet-Shiraz blend with blackcurrant, dark plum and firm tannins."
+  },
+  {
+    wine: "A Growers Touch Durif",
+    producer: "Mino & Co",
+    region: "Southern New South Wales, NSW",
+    regionGroup: "Southern New South Wales",
+    variety: "Durif",
+    type: "Red",
+    price: 18.70,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Rich and full-bodied, with dark berry fruit and firm, grippy tannins."
+  },
+  {
+    wine: "Shiraz - Grenache",
+    producer: "Greasy Fingers",
+    region: "South Australia",
+    regionGroup: "South Australia",
+    variety: "Shiraz / Grenache",
+    type: "Red",
+    price: 15.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "An easy-drinking Shiraz-Grenache blend with juicy red and dark fruit."
+  },
+  {
+    wine: "HB Special Release Basket Press Shiraz",
+    producer: "Hazyblur",
+    region: "South Australia",
+    regionGroup: "South Australia",
+    variety: "Shiraz",
+    type: "Red",
+    price: 19.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Basket-pressed Shiraz with concentrated dark fruit and a firm, structured finish."
   }
 ];
 
