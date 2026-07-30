@@ -329,7 +329,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: border-color 0.15s ease; }
   }
   .card:hover { border-color: #c9c9c5; }
   .type-dot {
@@ -938,6 +941,32 @@ function renderFeatured() {
 
 let activeType = 'all';
 let activeRegion = 'all';
+let hasRenderedOnce = false;
+const cardEls = new Map();
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function wineKey(w) {
+  return `${w.wine}__${w.producer}`;
+}
+
+function buildCard(w) {
+  const card = document.createElement('div');
+  card.className = 'card' + (w.score == null ? ' no-score' : '');
+  card.innerHTML = `
+    <span class="type-dot ${w.type.toLowerCase()}"></span>
+    <h3>${w.wine}</h3>
+    <p class="producer">${w.producer} · ${w.region}</p>
+    <p class="variety">${w.variety}</p>
+    <div class="stats">
+      ${w.vintage ? `<div class="stat-line"><span class="label">Vintage</span><span class="value">${w.vintage}</span></div>` : ''}
+      <div class="stat-line"><span class="label">Price</span><span class="value big">$${w.price.toFixed(2)}</span></div>
+      <div class="stat-line"><span class="label">Vivino Rating</span><span class="value${w.score == null ? ' no-score-value' : ''}">${starString(w.score)}</span></div>
+      ${w.pourScore != null ? `<div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(w.pourScore)} / 100</span></div>` : ''}
+    </div>
+    <p class="notes">${w.notes}</p>
+  `;
+  return card;
+}
 
 function render() {
   const sortBy = document.getElementById('sort').value;
@@ -956,32 +985,71 @@ function render() {
 
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
-  grid.innerHTML = '';
+  empty.style.display = list.length === 0 ? 'block' : 'none';
 
-  if (list.length === 0) {
-    empty.style.display = 'block';
-    return;
+  const animate = hasRenderedOnce && !prefersReducedMotion;
+
+  // FLIP: capture each visible card's current screen position before we
+  // reorder the DOM, so a sort/filter change can animate cards sliding to
+  // their new spot instead of an instant reshuffle.
+  const firstRects = new Map();
+  if (animate) {
+    for (const el of grid.children) {
+      firstRects.set(el.dataset.key, el.getBoundingClientRect());
+    }
   }
-  empty.style.display = 'none';
+
+  const visibleKeys = new Set(list.map(wineKey));
+  for (const [key, el] of cardEls) {
+    if (!visibleKeys.has(key)) {
+      el.remove();
+      cardEls.delete(key);
+    }
+  }
 
   for (const w of list) {
-    const card = document.createElement('div');
-    card.className = 'card' + (w.score == null ? ' no-score' : '');
-    card.innerHTML = `
-      <span class="type-dot ${w.type.toLowerCase()}"></span>
-      <h3>${w.wine}</h3>
-      <p class="producer">${w.producer} · ${w.region}</p>
-      <p class="variety">${w.variety}</p>
-      <div class="stats">
-        ${w.vintage ? `<div class="stat-line"><span class="label">Vintage</span><span class="value">${w.vintage}</span></div>` : ''}
-        <div class="stat-line"><span class="label">Price</span><span class="value big">$${w.price.toFixed(2)}</span></div>
-        <div class="stat-line"><span class="label">Vivino Rating</span><span class="value${w.score == null ? ' no-score-value' : ''}">${starString(w.score)}</span></div>
-        ${w.pourScore != null ? `<div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(w.pourScore)} / 100</span></div>` : ''}
-      </div>
-      <p class="notes">${w.notes}</p>
-    `;
-    grid.appendChild(card);
+    const key = wineKey(w);
+    let el = cardEls.get(key);
+    if (!el) {
+      el = buildCard(w);
+      el.dataset.key = key;
+      cardEls.set(key, el);
+    }
+    grid.appendChild(el);
   }
+
+  if (!animate) {
+    hasRenderedOnce = true;
+    return;
+  }
+
+  // Invert: shift each pre-existing card back to where it used to be (no
+  // transition), then next frame clear the offset so the CSS transition
+  // animates it sliding to its real position. New cards fade + scale in.
+  for (const w of list) {
+    const el = cardEls.get(wineKey(w));
+    const first = firstRects.get(wineKey(w));
+    el.style.transition = 'none';
+    if (first) {
+      const last = el.getBoundingClientRect();
+      const dx = first.left - last.left;
+      const dy = first.top - last.top;
+      if (dx || dy) el.style.transform = `translate(${dx}px, ${dy}px)`;
+    } else {
+      el.style.opacity = '0';
+      el.style.transform = 'scale(0.96)';
+    }
+  }
+
+  void grid.offsetHeight;
+
+  requestAnimationFrame(() => {
+    for (const el of cardEls.values()) {
+      el.style.transition = '';
+      el.style.transform = '';
+      el.style.opacity = '';
+    }
+  });
 }
 
 function setupFilterGroup(containerId, onChange) {
