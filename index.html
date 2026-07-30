@@ -100,7 +100,30 @@
     font-size: 1.05rem;
     line-height: 1.7;
     max-width: 640px;
-    margin: 0 0 3rem;
+    margin: 0 0 1rem;
+  }
+  .trust-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 2.5rem;
+    font-size: 0.78rem;
+  }
+  .trust-row .trust-label {
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 500;
+    margin-right: 0.1rem;
+  }
+  .trust-row .trust-name {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .trust-row .trust-sep {
+    color: var(--border);
   }
   h2.section {
     font-size: 1.35rem;
@@ -423,7 +446,17 @@
 <main>
 <div id="wines-view">
   <h1>Great drops <span class="accent">don't need to cost a lot</span></h1>
-  <p class="lede">A selection of wines under $30 AUD, found at your local, that punch above their price tag — ranked by Pour Score, a non-linear index that normalises Vivino ratings against price.</p>
+  <p class="lede">A selection of wines under $30 AUD, found at your local, that punch above their price tag — ranked by Pour Score, a non-linear index that normalises community and critic ratings against price.</p>
+  <div class="trust-row">
+    <span class="trust-label">Rated by</span>
+    <span class="trust-name">Vivino</span>
+    <span class="trust-sep">·</span>
+    <span class="trust-name">James Halliday</span>
+    <span class="trust-sep">·</span>
+    <span class="trust-name">Wine Spectator</span>
+    <span class="trust-sep">·</span>
+    <span class="trust-name">Decanter</span>
+  </div>
 
   <h2 class="section">Best value</h2>
   <div id="featured" class="featured"></div>
