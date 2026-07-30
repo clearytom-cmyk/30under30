@@ -46,6 +46,55 @@ None has meaningful community size or a stable public interface. Endpoints
 can change without notice, which is presumably why several of these are
 already dead.
 
+### Deeper look at each one
+
+Read the actual source (not just repo metadata) for all four:
+
+- **`aptash/vivino-api`** (Node) — drives headless Chrome via Puppeteer and
+  scrapes CSS classes off Vivino's rendered search page (no direct JSON API
+  call for wine data, beyond a `PUT /api/ship_to/` to localize
+  pricing/currency). Returns rating + review count from name search only, no
+  wine ID or vintage lookup. One-off CLI script, not an importable library.
+  Last commit Nov 2020 — the most fragile of the four to a frontend redesign.
+- **`jonathanstathakis/vivino_api`** (Python) — calls the real
+  `api/explore/explore` endpoint with the most complete documented filter
+  params of the four. But it **never extracts a rating field** into its
+  output despite filtering by `ratings_min`/`ratings_max`, has a real bug
+  (`get_request()` reads a module-level global `params` instead of
+  `self.params`), and importing the module executes a live network call and
+  drops into an interactive `IPython.embed()` shell — unsafe to import as-is.
+  Freshest commit of the four (Feb 2025), which is at least a signal the
+  endpoint was still responding recently.
+- **`gugarosa/viviner`** (Python) — cleanest file structure of the four
+  (separate `utils/constants.py`, `utils/requester.py`, argparse CLIs), and
+  hits three real endpoints (`explore/explore`, `wines/{id}/tastes`,
+  `wines/{id}/reviews`) for the most complete data pull. But it sends a
+  **literal blank `User-Agent` header** on every request, which the other
+  repos' own code comments suggest is exactly what gets requests blocked.
+  **Archived by its maintainer since July 2024.**
+- **`Piltxi/Vivino-Crawler`** ("WineTz", Python) — calls `explore/explore`
+  plus a per-wine `wines/{id}/reviews` endpoint, and is the **only one of the
+  four that explicitly extracts `vintage.statistics.ratings_average` and
+  `ratings_count`** — exactly the fields this site needs. Uses a real spoofed
+  User-Agent, has genuine error handling (`raise_for_status()`, typed
+  exceptions, graceful partial-save on Ctrl+C). Structured as a CLI tool
+  across a few files rather than a library, but the core functions
+  (`wineCrawler()`/`getWine()`) look straightforward to lift out. Last
+  commit Jan 2024; very low visibility (2 stars, no issues either way on
+  current status).
+
+**If experimenting with any of these purely for personal/experimental
+lookups** (separate from the ToS risk already noted below): `Piltxi/Vivino-Crawler`
+is the best-positioned technically — clearest match to the data this site
+needs, most defensive code. Worth a quick sanity check that
+`api/explore/explore` still returns real data before investing time (it's
+undocumented and could change anytime). **Avoid `gugarosa/viviner`**
+(archived, blank User-Agent) and **`aptash/vivino-api`** (stale since 2020,
+brittle CSS-dependent scrape, no ID/vintage lookup) outright. None of the
+four demonstrate clean AUD-specific pricing — the country/currency params
+would need testing directly rather than assuming from these repos'
+Italy/Brazil/US-centric examples.
+
 ## Legal/risk considerations
 
 - Vivino's terms reportedly prohibit automated access ("scripts, browser
