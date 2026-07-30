@@ -916,22 +916,19 @@ function starString(score) {
   return "★".repeat(full) + "☆".repeat(5 - full) + ` ${score.toFixed(1)}`;
 }
 
-function wineTitle(w) {
-  return w.vintage ? `${w.vintage} ${w.wine}` : w.wine;
-}
-
 function renderFeatured() {
   const best = wines.filter(w => w.pourScore != null).sort((a, b) => b.pourScore - a.pourScore)[0];
   document.getElementById('featured').innerHTML = `
     <span class="type-dot ${best.type.toLowerCase()}"></span>
     <div class="left">
       <span class="tag">Top Pour Score</span>
-      <h3>${wineTitle(best)}</h3>
+      <h3>${best.wine}</h3>
       <p class="producer">${best.producer} · ${best.region}</p>
       <p class="variety">${best.variety}</p>
       <p class="desc">${best.notes}</p>
     </div>
     <div class="right">
+      ${best.vintage ? `<div class="stat-line"><span class="label">Vintage</span><span class="value">${best.vintage}</span></div>` : ''}
       <div class="stat-line"><span class="label">Price</span><span class="value big">$${best.price.toFixed(2)}</span></div>
       <div class="stat-line"><span class="label">Vivino Rating</span><span class="value">${starString(best.score)}</span></div>
       <div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(best.pourScore)} / 100</span></div>
@@ -972,10 +969,11 @@ function render() {
     card.className = 'card' + (w.score == null ? ' no-score' : '');
     card.innerHTML = `
       <span class="type-dot ${w.type.toLowerCase()}"></span>
-      <h3>${wineTitle(w)}</h3>
+      <h3>${w.wine}</h3>
       <p class="producer">${w.producer} · ${w.region}</p>
       <p class="variety">${w.variety}</p>
       <div class="stats">
+        ${w.vintage ? `<div class="stat-line"><span class="label">Vintage</span><span class="value">${w.vintage}</span></div>` : ''}
         <div class="stat-line"><span class="label">Price</span><span class="value big">$${w.price.toFixed(2)}</span></div>
         <div class="stat-line"><span class="label">Vivino Rating</span><span class="value${w.score == null ? ' no-score-value' : ''}">${starString(w.score)}</span></div>
         ${w.pourScore != null ? `<div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(w.pourScore)} / 100</span></div>` : ''}
