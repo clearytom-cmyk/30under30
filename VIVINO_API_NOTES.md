@@ -95,6 +95,34 @@ four demonstrate clean AUD-specific pricing — the country/currency params
 would need testing directly rather than assuming from these repos'
 Italy/Brazil/US-centric examples.
 
+## Reusable fetch script
+
+`scripts/fetch_vivino_wines.py` implements the `Piltxi/Vivino-Crawler`
+approach (calls `api/explore/explore` directly, extracts
+`ratings_average`/`ratings_count`/price) as a standalone script.
+
+**Manual trigger only — not wired into the site, CI, or any schedule.**
+Run it by hand, review the output, and manually copy anything worth keeping
+into the `wines` array in `index.html` (matching the existing fields —
+`wine`, `producer`, `region`, `regionGroup`, `variety`, `type`, `price`,
+`score`, `scoreSource`, `notes`). The script itself never touches
+`index.html`.
+
+```
+pip install requests
+python scripts/fetch_vivino_wines.py --min-rating 3.7 --max-price 30 --country au
+```
+
+Writes matches to `vivino_candidates.json` (gitignored — it's fetch output,
+not curated content) and prints a summary to stdout.
+
+Note: this could not be executed or tested from the sandbox this repo was
+developed in — that environment's own network egress policy blocks
+`www.vivino.com` outright (separate from anything Vivino itself does). It
+needs to be run from an environment with normal internet access. Since the
+endpoint is undocumented, sanity-check that it still returns real data
+before relying on it (see the freshness caveats above).
+
 ## Legal/risk considerations
 
 - Vivino's terms reportedly prohibit automated access ("scripts, browser
