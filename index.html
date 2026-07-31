@@ -358,6 +358,12 @@
     font-weight: 700;
     color: var(--ink);
   }
+  .country-tagline {
+    font-size: 0.76rem;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.35;
+  }
   .country-count {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 2.3rem;
@@ -558,16 +564,19 @@
   <div class="origin-list" id="origin-list">
     <button class="country-tile" data-geo="AU">
       <span class="country-name">Australia</span>
+      <span class="country-tagline">Bold Shiraz and sun-soaked reds</span>
       <span class="country-count">0</span>
       <span class="country-unit">wines</span>
     </button>
     <button class="country-tile" data-geo="PT">
       <span class="country-name">Portugal</span>
+      <span class="country-tagline">Port, Vinho Verde and old native vines</span>
       <span class="country-count">0</span>
       <span class="country-unit">wines</span>
     </button>
     <button class="country-tile empty" data-geo="IT" disabled>
       <span class="country-name">Italy</span>
+      <span class="country-tagline">Chianti, Barolo, Prosecco</span>
       <span class="country-count">—</span>
       <span class="country-unit">coming soon</span>
     </button>
