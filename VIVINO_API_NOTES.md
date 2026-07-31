@@ -123,6 +123,37 @@ needs to be run from an environment with normal internet access. Since the
 endpoint is undocumented, sanity-check that it still returns real data
 before relying on it (see the freshness caveats above).
 
+### Fetching wines by origin country other than Australia
+
+`--country-origin` (aliased as `--country` for backwards compatibility)
+filters by the wine's **country of origin** — where it's made — not by
+where it's available to buy. Vivino has no documented, verified way to
+filter by retail availability in a specific market. Combined with
+`--currency`, the intent is to get e.g. Portuguese-origin wines priced in
+AUD, but whether Vivino actually honors `currency_code` is unverified — of
+the four third-party wrappers assessed earlier, only one documents a
+`currency_code` param at all, and even that repo never demonstrates it
+working; the rest only ever fetch in the origin market's native currency.
+So the script self-checks the first result's actual currency against what
+was requested and aborts with a clear error rather than silently
+mislabeling EUR prices as AUD:
+
+```
+python scripts/fetch_vivino_wines.py --min-rating 4.0 --max-price 30 --country-origin pt --currency AUD
+```
+
+If the self-check aborts, fetch without `--currency` (prices come back in
+the origin market's native currency — EUR for Portugal) and convert
+manually using an exchange rate you look up yourself; don't trust a
+hardcoded rate baked into the script, since it will go stale.
+
+**Important:** even a successful currency match only means the *prices*
+are in AUD — it says nothing about whether that specific bottle is
+actually stocked by an Australian retailer. There's no way to verify
+"available in Australia" from this API; treat "found in Australia" as best
+interpreted through AUD pricing plus your own judgement/spot-checks, not
+as something the script can guarantee.
+
 ## Legal/risk considerations
 
 - Vivino's terms reportedly prohibit automated access ("scripts, browser
