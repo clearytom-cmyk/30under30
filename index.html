@@ -494,6 +494,15 @@
       <button class="filter-btn" data-value="Murray Darling">Murray Darling</button>
       <button class="filter-btn" data-value="Henty">Henty</button>
       <button class="filter-btn" data-value="Southern New South Wales">Southern NSW</button>
+      <button class="filter-btn" data-value="Vinho Verde">Vinho Verde</button>
+      <button class="filter-btn" data-value="Douro">Douro</button>
+      <button class="filter-btn" data-value="Porto">Porto</button>
+      <button class="filter-btn" data-value="Península de Setúbal">Península de Setúbal</button>
+      <button class="filter-btn" data-value="Setúbal">Setúbal</button>
+      <button class="filter-btn" data-value="Lisboa">Lisboa</button>
+      <button class="filter-btn" data-value="Tejo">Tejo</button>
+      <button class="filter-btn" data-value="Madeira">Madeira</button>
+      <button class="filter-btn" data-value="Vinho de Portugal">Vinho de Portugal</button>
     </div>
   </div>
   <div id="grid" class="grid"></div>
@@ -916,6 +925,266 @@ const wines = [
     score: 4.1,
     scoreSource: "Vivino",
     notes: "Basket-pressed Shiraz with concentrated dark fruit and a firm, structured finish."
+  },
+  {
+    wine: "Vinho Verde Branco",
+    producer: "Brisa Suave",
+    region: "Vinho Verde, Portugal",
+    regionGroup: "Vinho Verde",
+    variety: "Vinho Verde Blend",
+    type: "White",
+    vintage: "2025",
+    price: 21.42,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Light and slightly off-dry, with citrus, green apple and a gentle spritz."
+  },
+  {
+    wine: "Red Blend",
+    producer: "Silk & Spice",
+    region: "Vinho de Portugal",
+    regionGroup: "Vinho de Portugal",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2023",
+    price: 18.57,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "An easy-drinking Portuguese red blend with dark berry fruit and soft, approachable tannins."
+  },
+  {
+    wine: "Vinha do Fava Touriga Nacional",
+    producer: "Casa Ermelinda Freitas",
+    region: "Península de Setúbal, Portugal",
+    regionGroup: "Península de Setúbal",
+    variety: "Touriga Nacional",
+    type: "Red",
+    vintage: "2023",
+    price: 16.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Full-bodied Touriga Nacional with dark plum, violets and firm tannins."
+  },
+  {
+    wine: "Late Bottled Vintage Port",
+    producer: "Niepoort",
+    region: "Porto, Portugal",
+    regionGroup: "Porto",
+    variety: "Port Blend",
+    type: "Fortified",
+    vintage: "2021",
+    price: 21.03,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "A rich, structured LBV port with black fruit, spice and a long, warming finish."
+  },
+  {
+    wine: "Baía de Troia Castelão",
+    producer: "Casa Ermelinda Freitas",
+    region: "Península de Setúbal, Portugal",
+    regionGroup: "Península de Setúbal",
+    variety: "Castelão",
+    type: "Red",
+    vintage: "2023",
+    price: 19.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Medium-bodied Castelão with red berry fruit and a soft, earthy edge."
+  },
+  {
+    wine: "Alicante Bouschet",
+    producer: "Aluado",
+    region: "Lisboa, Portugal",
+    regionGroup: "Lisboa",
+    variety: "Alicante Bouschet",
+    type: "Red",
+    vintage: "2024",
+    price: 18.99,
+    score: 4.1,
+    scoreSource: "Vivino",
+    notes: "Deeply coloured Alicante Bouschet with dark plum, licorice and firm, chewy tannins."
+  },
+  {
+    wine: "Eleivera Tinto",
+    producer: "Dos Lusíadas",
+    region: "Douro, Portugal",
+    regionGroup: "Douro",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2017",
+    price: 22,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "A structured Douro red with dark fruit, spice and firm tannins."
+  },
+  {
+    wine: "Rocksand Shiraz",
+    producer: "Casa Ermelinda Freitas",
+    region: "Península de Setúbal, Portugal",
+    regionGroup: "Península de Setúbal",
+    variety: "Shiraz",
+    type: "Red",
+    vintage: "2023",
+    price: 17.99,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "Ripe, peppery Shiraz with dark berry fruit and a warm, spiced finish."
+  },
+  {
+    wine: "Lobo e Falcão Wolf & Falcon Tinto",
+    producer: "Quinta do Casal Branco",
+    region: "Tejo, Portugal",
+    regionGroup: "Tejo",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2024",
+    price: 19.99,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "An approachable Tejo red blend with ripe red fruit and soft tannins."
+  },
+  {
+    wine: "Tinto",
+    producer: "Amoras",
+    region: "Lisboa, Portugal",
+    regionGroup: "Lisboa",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2023",
+    price: 16.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "An easy-drinking Lisboa red with juicy red fruit and light tannins."
+  },
+  {
+    wine: "Full Rich Madeira",
+    producer: "Henriques & Henriques",
+    region: "Madeira, Portugal",
+    regionGroup: "Madeira",
+    variety: "Madeira Blend",
+    type: "Fortified",
+    vintage: "NV",
+    price: 28,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "A rich, nutty fortified Madeira with caramel, dried fruit and a long, tangy finish."
+  },
+  {
+    wine: "Tinto",
+    producer: "Stones & Bones",
+    region: "Lisboa, Portugal",
+    regionGroup: "Lisboa",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2023",
+    price: 18.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "A medium-bodied Lisboa red with dark berry fruit and a soft, earthy finish."
+  },
+  {
+    wine: "Tinto",
+    producer: "Portinho do Covo",
+    region: "Setúbal, Portugal",
+    regionGroup: "Setúbal",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2023",
+    price: 14.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "An easy-drinking Setúbal red with ripe red fruit and gentle tannins."
+  },
+  {
+    wine: "Douro Twisted Tinto",
+    producer: "Niepoort",
+    region: "Douro, Portugal",
+    regionGroup: "Douro",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2022",
+    price: 25.71,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "A vibrant, fruit-forward Douro red with dark berry fruit and a fresh finish."
+  },
+  {
+    wine: "Vinho Verde",
+    producer: "Casal Garcia",
+    region: "Vinho Verde, Portugal",
+    regionGroup: "Vinho Verde",
+    variety: "Vinho Verde Blend",
+    type: "White",
+    vintage: "NV",
+    price: 14.28,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Light, crisp and lightly spritzy, with citrus and green apple."
+  },
+  {
+    wine: "Ruby Port",
+    producer: "Ferreira",
+    region: "Porto, Portugal",
+    regionGroup: "Porto",
+    variety: "Port Blend",
+    type: "Fortified",
+    vintage: "NV",
+    price: 22.85,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "A classic ruby port with dark berry fruit, spice and a sweet, warming finish."
+  },
+  {
+    wine: "Tawny Port",
+    producer: "Niepoort",
+    region: "Porto, Portugal",
+    regionGroup: "Porto",
+    variety: "Port Blend",
+    type: "Fortified",
+    vintage: "NV",
+    price: 29.17,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "An aged tawny with nutty, caramel notes and a smooth, warming finish."
+  },
+  {
+    wine: "Reserva Vinhão",
+    producer: "Adega Ponte da Barca",
+    region: "Vinho Verde, Portugal",
+    regionGroup: "Vinho Verde",
+    variety: "Vinhão",
+    type: "Red",
+    vintage: "2024",
+    price: 25,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Deeply coloured Vinhão with tart dark berry fruit and firm, grippy tannins."
+  },
+  {
+    wine: "Douro Unoaked",
+    producer: "Messias",
+    region: "Douro, Portugal",
+    regionGroup: "Douro",
+    variety: "Red Blend",
+    type: "Red",
+    vintage: "2019",
+    price: 14.51,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "An unoaked Douro red with bright dark fruit and fresh, easy tannins."
+  },
+  {
+    wine: "Fine Ruby Port",
+    producer: "W. & J. Graham's",
+    region: "Porto, Portugal",
+    regionGroup: "Porto",
+    variety: "Port Blend",
+    type: "Fortified",
+    vintage: "NV",
+    price: 29.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "A youthful ruby port with vibrant dark berry fruit and a sweet, warming finish."
   }
 ];
 
