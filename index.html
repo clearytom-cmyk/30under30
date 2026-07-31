@@ -166,16 +166,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
+    padding: 0.32rem 0.75rem;
+    border-radius: 999px;
     background: var(--accent);
     color: #fff;
     font-family: 'Space Mono', ui-monospace, monospace;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
     margin-bottom: 0.7rem;
-    transform: rotate(-6deg);
+    transform: rotate(-4deg);
     box-shadow: 0 3px 8px rgba(0,87,255,0.35);
   }
   .featured .left h3 {
@@ -1315,14 +1317,17 @@ function starString(score) {
 
 let hasRenderedFeaturedOnce = false;
 
+const featuredTypeLabels = { Red: 'Red', White: 'White', Rose: 'Rosé', Sparkling: 'Sparkling', Fortified: 'Fortified' };
+
 function renderFeatured(type) {
   const pool = (!type || type === 'all') ? wines : wines.filter(w => w.type === type);
   const best = pool.filter(w => w.pourScore != null).sort((a, b) => b.pourScore - a.pourScore)[0];
+  const badgeLabel = (!type || type === 'all') ? '#1 Overall' : `#1 ${featuredTypeLabels[type] || type}`;
 
   const html = best ? `
     <span class="type-dot ${best.type.toLowerCase()}"></span>
     <div class="left">
-      <span class="badge-1">#1</span>
+      <span class="badge-1">${badgeLabel}</span>
       <h3>${best.wine}</h3>
       <p class="producer">${best.producer} · ${best.region}</p>
       <p class="variety">${best.variety}</p>
