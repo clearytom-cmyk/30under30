@@ -142,6 +142,9 @@
   }
 
   /* Featured split card */
+  .featured-tabs {
+    margin-bottom: 1rem;
+  }
   .featured {
     position: relative;
     display: grid;
@@ -150,20 +153,30 @@
     border-radius: var(--radius);
     overflow: hidden;
     margin-bottom: 3rem;
+    transition: opacity 0.18s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured { transition: none; }
   }
   .featured .left {
     background: var(--card);
     padding: 1.6rem 1.7rem;
   }
-  .featured .left .tag {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--accent);
-    background: rgba(0,87,255,0.1);
-    border-radius: 999px;
-    padding: 0.18rem 0.6rem;
+  .featured .left .badge-1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
     margin-bottom: 0.7rem;
+    transform: rotate(-6deg);
+    box-shadow: 0 3px 8px rgba(0,87,255,0.35);
   }
   .featured .left h3 {
     margin: 0 0 0.35rem;
@@ -530,6 +543,14 @@
   </div>
 
   <h2 class="section">Best value</h2>
+  <div class="filters featured-tabs" id="featured-tabs">
+    <button class="filter-btn active" data-type="all">All</button>
+    <button class="filter-btn" data-type="Red">Red</button>
+    <button class="filter-btn" data-type="White">White</button>
+    <button class="filter-btn" data-type="Rose">Rosé</button>
+    <button class="filter-btn" data-type="Sparkling">Sparkling</button>
+    <button class="filter-btn" data-type="Fortified">Fortified</button>
+  </div>
   <div id="featured" class="featured"></div>
 
   <h2 class="section">All wines</h2>
@@ -1283,12 +1304,16 @@ function starString(score) {
   return "★".repeat(full) + "☆".repeat(5 - full) + ` ${score.toFixed(1)}`;
 }
 
-function renderFeatured() {
-  const best = wines.filter(w => w.pourScore != null).sort((a, b) => b.pourScore - a.pourScore)[0];
-  document.getElementById('featured').innerHTML = `
+let hasRenderedFeaturedOnce = false;
+
+function renderFeatured(type) {
+  const pool = (!type || type === 'all') ? wines : wines.filter(w => w.type === type);
+  const best = pool.filter(w => w.pourScore != null).sort((a, b) => b.pourScore - a.pourScore)[0];
+
+  const html = best ? `
     <span class="type-dot ${best.type.toLowerCase()}"></span>
     <div class="left">
-      <span class="tag">Top Pour Score</span>
+      <span class="badge-1">#1</span>
       <h3>${best.wine}</h3>
       <p class="producer">${best.producer} · ${best.region}</p>
       <p class="variety">${best.variety}</p>
@@ -1300,7 +1325,22 @@ function renderFeatured() {
       <div class="stat-line"><span class="label">Vivino Rating</span><span class="value">${starString(best.score)}</span></div>
       <div class="stat-line"><span class="label">Pour Score</span><span class="value accent">${Math.round(best.pourScore)} / 100</span></div>
     </div>
-  `;
+  ` : `<p class="empty">No wines in this category yet.</p>`;
+
+  const el = document.getElementById('featured');
+  const animate = hasRenderedFeaturedOnce && !prefersReducedMotion;
+  hasRenderedFeaturedOnce = true;
+
+  if (!animate) {
+    el.innerHTML = html;
+    return;
+  }
+
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.innerHTML = html;
+    el.style.opacity = '1';
+  }, 180);
 }
 
 // Every wine's regionGroup, grouped by country of origin. This is a
@@ -1490,8 +1530,20 @@ function setupOriginList() {
 
 setupFilterGroup('type-filters', v => { activeType = v; });
 setupOriginList();
+
+// Its own click wiring rather than setupFilterGroup, since switching the
+// featured pick shouldn't also re-trigger the wine grid's render()/FLIP
+// animation below — nothing in the grid actually changes.
+document.getElementById('featured-tabs').querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelector('#featured-tabs .filter-btn.active').classList.remove('active');
+    btn.classList.add('active');
+    renderFeatured(btn.dataset.type);
+  });
+});
+
 document.getElementById('sort').addEventListener('change', render);
-renderFeatured();
+renderFeatured('all');
 render();
 
 document.getElementById('signup').addEventListener('submit', (e) => {
