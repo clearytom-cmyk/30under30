@@ -576,11 +576,11 @@
       <span class="country-count">0</span>
       <span class="country-unit">wines</span>
     </button>
-    <button class="country-tile empty" data-geo="IT" disabled>
+    <button class="country-tile" data-geo="IT">
       <span class="country-name">Italy</span>
       <span class="country-tagline">Chianti, Barolo, Prosecco</span>
-      <span class="country-count">—</span>
-      <span class="country-unit">coming soon</span>
+      <span class="country-count">0</span>
+      <span class="country-unit">wines</span>
     </button>
   </div>
   <div class="controls-wrap">
@@ -1299,6 +1299,396 @@ const wines = [
     scoreSource: "Vivino",
     vivino_wine_id: 1142285,
     notes: "A youthful ruby port with vibrant dark berry fruit and a sweet, warming finish."
+  },
+  {
+    wine: "Chianti Classico",
+    producer: "Ruffino",
+    region: "Tuscany, Italy",
+    regionGroup: "Tuscany",
+    variety: "Sangiovese",
+    type: "Red",
+    vintage: "2021",
+    price: 24.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Classic Chianti with tart cherry, dried herbs and firm, savoury tannins."
+  },
+  {
+    wine: "Santa Cristina Toscana",
+    producer: "Antinori",
+    region: "Tuscany, Italy",
+    regionGroup: "Tuscany",
+    variety: "Sangiovese / Merlot",
+    type: "Red",
+    vintage: "2023",
+    price: 22.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Soft and approachable, with ripe red cherry and a touch of spice."
+  },
+  {
+    wine: "Chianti",
+    producer: "Cecchi",
+    region: "Tuscany, Italy",
+    regionGroup: "Tuscany",
+    variety: "Sangiovese",
+    type: "Red",
+    vintage: "2022",
+    price: 19.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "Bright cherry and plum with an earthy, savoury edge."
+  },
+  {
+    wine: "Chianti",
+    producer: "Rocca delle Macìe",
+    region: "Tuscany, Italy",
+    regionGroup: "Tuscany",
+    variety: "Sangiovese",
+    type: "Red",
+    vintage: "2022",
+    price: 21.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "Medium-bodied with red cherry, violet and fine, dusty tannins."
+  },
+  {
+    wine: "Col di Sasso",
+    producer: "Banfi",
+    region: "Tuscany, Italy",
+    regionGroup: "Tuscany",
+    variety: "Cabernet Sauvignon / Sangiovese",
+    type: "Red",
+    vintage: "2022",
+    price: 19.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "A juicy Cabernet-Sangiovese blend with dark plum and soft, rounded tannins."
+  },
+  {
+    wine: "Campofiorin",
+    producer: "Masi",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Corvina / Rondinella / Molinara",
+    type: "Red",
+    vintage: "2021",
+    price: 27.99,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "A Ripasso-style red with rich dried cherry, raisin and a warm, velvety finish."
+  },
+  {
+    wine: "Rafaél Appassimento",
+    producer: "Tommasi",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Merlot / Corvina / Rondinella",
+    type: "Red",
+    vintage: "2022",
+    price: 26.99,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "Concentrated and smooth, with dried dark fruit, chocolate and soft tannins."
+  },
+  {
+    wine: "Valpolicella Classico",
+    producer: "Bertani",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Corvina / Rondinella",
+    type: "Red",
+    vintage: "2022",
+    price: 22,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Light and bright, with sour cherry, red currant and a subtle almond note."
+  },
+  {
+    wine: "Montepulciano d'Abruzzo",
+    producer: "Zaccagnini",
+    region: "Abruzzo, Italy",
+    regionGroup: "Abruzzo",
+    variety: "Montepulciano",
+    type: "Red",
+    vintage: "2022",
+    price: 19.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "Full-bodied and plush, with dark plum, black cherry and soft, ripe tannins."
+  },
+  {
+    wine: "Fantini Sangiovese",
+    producer: "Farnese",
+    region: "Abruzzo, Italy",
+    regionGroup: "Abruzzo",
+    variety: "Sangiovese",
+    type: "Red",
+    vintage: "2023",
+    price: 14.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "An easy-drinking Sangiovese with juicy red cherry and soft tannins."
+  },
+  {
+    wine: "Nero d'Avola",
+    producer: "Feudo Arancio",
+    region: "Sicily, Italy",
+    regionGroup: "Sicily",
+    variety: "Nero d'Avola",
+    type: "Red",
+    vintage: "2023",
+    price: 15.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "Ripe and rounded, with dark plum, blackberry and a soft, warm finish."
+  },
+  {
+    wine: "Nero d'Avola",
+    producer: "Cusumano",
+    region: "Sicily, Italy",
+    regionGroup: "Sicily",
+    variety: "Nero d'Avola",
+    type: "Red",
+    vintage: "2022",
+    price: 18.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Full-bodied with dark berry fruit, liquorice and gentle, ripe tannins."
+  },
+  {
+    wine: "La Segreta Rosso",
+    producer: "Planeta",
+    region: "Sicily, Italy",
+    regionGroup: "Sicily",
+    variety: "Nero d'Avola / Merlot / Syrah",
+    type: "Red",
+    vintage: "2022",
+    price: 24.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "A polished Sicilian blend with dark cherry, herbs and a smooth, spicy finish."
+  },
+  {
+    wine: "Sessantanni Old Vines Primitivo di Manduria",
+    producer: "San Marzano",
+    region: "Puglia, Italy",
+    regionGroup: "Puglia",
+    variety: "Primitivo",
+    type: "Red",
+    vintage: "2021",
+    price: 25.99,
+    score: 4.2,
+    scoreSource: "Vivino",
+    notes: "Concentrated old-vine Primitivo with dark plum, chocolate and velvety tannins."
+  },
+  {
+    wine: "125 Primitivo di Manduria",
+    producer: "Feudi Salentini",
+    region: "Puglia, Italy",
+    regionGroup: "Puglia",
+    variety: "Primitivo",
+    type: "Red",
+    vintage: "2022",
+    price: 17.99,
+    score: 4.0,
+    scoreSource: "Vivino",
+    notes: "Generous and ripe, with jammy dark fruit and a soft, spiced finish."
+  },
+  {
+    wine: "Pinot Grigio",
+    producer: "Santa Margherita",
+    region: "Alto Adige, Italy",
+    regionGroup: "Alto Adige",
+    variety: "Pinot Grigio",
+    type: "White",
+    vintage: "2023",
+    price: 29.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Crisp and refined, with pear, citrus and a clean mineral finish."
+  },
+  {
+    wine: "Pinot Grigio delle Venezie",
+    producer: "Cavit",
+    region: "Trentino, Italy",
+    regionGroup: "Trentino",
+    variety: "Pinot Grigio",
+    type: "White",
+    vintage: "2023",
+    price: 15.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "Light and easy-drinking, with green apple and a crisp, dry finish."
+  },
+  {
+    wine: "Pinot Grigio",
+    producer: "Ecco Domani",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Pinot Grigio",
+    type: "White",
+    vintage: "2023",
+    price: 16.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "Light-bodied with citrus and orchard fruit over a clean, dry palate."
+  },
+  {
+    wine: "San Benedetto Lugana",
+    producer: "Zenato",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Turbiana",
+    type: "White",
+    vintage: "2023",
+    price: 26.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "Textured and fresh, with white peach, citrus and a saline, mineral edge."
+  },
+  {
+    wine: "Soave Classico",
+    producer: "Bolla",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Garganega",
+    type: "White",
+    vintage: "2023",
+    price: 16.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "Light and floral, with green apple, almond and a soft, dry finish."
+  },
+  {
+    wine: "La Segreta Bianco",
+    producer: "Planeta",
+    region: "Sicily, Italy",
+    regionGroup: "Sicily",
+    variety: "Grecanico / Chardonnay / Viognier",
+    type: "White",
+    vintage: "2023",
+    price: 24.99,
+    score: 3.9,
+    scoreSource: "Vivino",
+    notes: "Aromatic and fresh, with citrus, tropical fruit and a crisp finish."
+  },
+  {
+    wine: "Frascati Superiore",
+    producer: "Fontana Candida",
+    region: "Lazio, Italy",
+    regionGroup: "Lazio",
+    variety: "Malvasia / Trebbiano",
+    type: "White",
+    vintage: "2023",
+    price: 14.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "Light and dry, with citrus, pear and a delicate floral note."
+  },
+  {
+    wine: "Falanghina del Sannio",
+    producer: "Feudi di San Gregorio",
+    region: "Campania, Italy",
+    regionGroup: "Campania",
+    variety: "Falanghina",
+    type: "White",
+    vintage: "2023",
+    price: 22.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Aromatic and zesty, with citrus, white flowers and a fresh mineral finish."
+  },
+  {
+    wine: "Prosecco",
+    producer: "La Marca",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Glera",
+    type: "Sparkling",
+    vintage: "NV",
+    price: 17.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Fine, persistent bubbles with green apple, pear and citrus notes."
+  },
+  {
+    wine: "Il Fresco Prosecco",
+    producer: "Villa Sandi",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Glera",
+    type: "Sparkling",
+    vintage: "NV",
+    price: 18.99,
+    score: 3.8,
+    scoreSource: "Vivino",
+    notes: "Light and refreshing, with white peach, citrus and a crisp, dry finish."
+  },
+  {
+    wine: "Prosecco Brut",
+    producer: "Mionetto",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Glera",
+    type: "Sparkling",
+    vintage: "NV",
+    price: 16.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "Crisp and fruity, with green apple, pear and fine, lively bubbles."
+  },
+  {
+    wine: "Prosecco",
+    producer: "Zonin",
+    region: "Veneto, Italy",
+    regionGroup: "Veneto",
+    variety: "Glera",
+    type: "Sparkling",
+    vintage: "NV",
+    price: 15.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "Light and easy, with citrus and green apple over a soft mousse."
+  },
+  {
+    wine: "Cerasuolo d'Abruzzo",
+    producer: "Cantina Tollo",
+    region: "Abruzzo, Italy",
+    regionGroup: "Abruzzo",
+    variety: "Montepulciano",
+    type: "Rose",
+    vintage: "2023",
+    price: 17.99,
+    score: 3.7,
+    scoreSource: "Vivino",
+    notes: "A deep-coloured rosé with red berry fruit, watermelon and a dry, savoury finish."
+  },
+  {
+    wine: "Rosato",
+    producer: "Feudo Arancio",
+    region: "Sicily, Italy",
+    regionGroup: "Sicily",
+    variety: "Nero d'Avola",
+    type: "Rose",
+    vintage: "2023",
+    price: 16.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "Pale and dry, with strawberry, citrus and a crisp, refreshing finish."
+  },
+  {
+    wine: "Marsala Fine",
+    producer: "Florio",
+    region: "Sicily, Italy",
+    regionGroup: "Sicily",
+    variety: "Grillo",
+    type: "Fortified",
+    vintage: "NV",
+    price: 19.99,
+    score: 3.6,
+    scoreSource: "Vivino",
+    notes: "A classic fortified Marsala with caramel, dried fig and a warm, nutty finish."
   }
 ];
 
@@ -1390,7 +1780,10 @@ const geoGroups = {
     'Alentejo', 'Vinho Verde', 'Vinho de Portugal', 'Península de Setúbal',
     'Setúbal', 'Lisboa', 'Douro', 'Tejo', 'Madeira', 'Porto'
   ],
-  IT: []
+  IT: [
+    'Tuscany', 'Veneto', 'Abruzzo', 'Sicily', 'Puglia',
+    'Alto Adige', 'Trentino', 'Lazio', 'Campania'
+  ]
 };
 
 let activeType = 'all';
