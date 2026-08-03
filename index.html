@@ -93,7 +93,29 @@
     margin: 0 0 0.9rem;
   }
   h1 .accent {
-    color: var(--accent);
+    background: linear-gradient(100deg,
+      oklch(0.55 0.22 260) 0%,
+      oklch(0.7 0.15 250) 30%,
+      oklch(0.55 0.22 260) 60%,
+      oklch(0.7 0.15 250) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    h1 .accent {
+      animation: none;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: var(--accent);
+    }
   }
   .lede {
     color: #5a5a5a;
