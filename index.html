@@ -126,18 +126,44 @@
   }
   .trust-row {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     gap: 1.4rem;
     margin: 0 0 2.5rem;
   }
   .trust-row .trust-label {
+    flex: 0 0 auto;
     color: var(--muted-2);
     text-transform: uppercase;
     letter-spacing: 0.07em;
     font-weight: 500;
     font-size: 0.78rem;
     margin-right: 0.2rem;
+  }
+  .trust-marquee {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  }
+  .trust-track {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+    width: max-content;
+    animation: marquee 18s linear infinite;
+  }
+  .trust-group {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trust-track { animation: none; }
   }
   .trust-row img {
     height: 20px;
@@ -146,6 +172,7 @@
     object-fit: contain;
     display: block;
     filter: grayscale(100%);
+    flex: 0 0 auto;
   }
   .trust-row img.lg {
     height: 28px;
@@ -566,10 +593,22 @@
   <p class="lede">A selection of wines under $30 AUD, found at your local, that punch above their price tag — ranked by Pour Score, a non-linear index that normalises community and critic ratings against price.</p>
   <div class="trust-row">
     <span class="trust-label">Rated by</span>
-    <img src="assets/logos/vivino.jpg" alt="Vivino" class="lg">
-    <img src="assets/logos/james-halliday.png" alt="James Halliday">
-    <img src="assets/logos/wine-spectator.jpg" alt="Wine Spectator">
-    <img src="assets/logos/decanter.png" alt="Decanter" class="lg">
+    <div class="trust-marquee">
+      <div class="trust-track">
+        <div class="trust-group">
+          <img src="assets/logos/vivino.jpg" alt="Vivino" class="lg">
+          <img src="assets/logos/james-halliday.png" alt="James Halliday">
+          <img src="assets/logos/wine-spectator.jpg" alt="Wine Spectator">
+          <img src="assets/logos/decanter.png" alt="Decanter" class="lg">
+        </div>
+        <div class="trust-group" aria-hidden="true">
+          <img src="assets/logos/vivino.jpg" alt="" class="lg">
+          <img src="assets/logos/james-halliday.png" alt="">
+          <img src="assets/logos/wine-spectator.jpg" alt="">
+          <img src="assets/logos/decanter.png" alt="" class="lg">
+        </div>
+      </div>
+    </div>
   </div>
 
   <h2 class="section">Best value</h2>
